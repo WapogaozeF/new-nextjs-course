@@ -3,7 +3,7 @@
 import Messages from "@/components/messages";
 
 // export const revalidate = 5;
-// export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export default async function MessagesPage() {
 	// unstable_noStore();
