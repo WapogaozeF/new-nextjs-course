@@ -10,6 +10,7 @@ export default async function MessagesPage() {
 	const response = await fetch("http://localhost:8080/messages", {
 		// 	cache: "no-store",
 		// next: { revalidate: 5 },
+		next: { tags: ["msg"] },
 	});
 	const messages = await response.json();
 
