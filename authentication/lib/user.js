@@ -9,5 +9,5 @@ export function createUser(email, password) {
 }
 
 export function getUserByEmail(email) {
-	return db.prepare("SELECT * FROM user WHERE email = ?").get(email);
+	return db.prepare("SELECT * FROM users WHERE email = ?").get(email);
 }
