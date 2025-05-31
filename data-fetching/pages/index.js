@@ -18,6 +18,14 @@ export async function getStaticProps() {
 	const jsonData = await promisifyReadFile(filePath);
 	const data = JSON.parse(jsonData);
 
+	if (!data) {
+		return {
+			redirect: {
+				destination: "/no-data",
+			},
+		};
+	}
+
 	if (data.products.length === 0) {
 		return { notFound: true };
 	}
