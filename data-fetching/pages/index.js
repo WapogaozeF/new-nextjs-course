@@ -2,11 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import util from "node:util";
 
+import Link from "next/link";
+
 function HomePage({ products }) {
 	return (
 		<ul>
 			{products.map((product) => (
-				<li key={product.id}>{product.title}</li>
+				<li key={product.id}>
+					<Link href={`/${product.id}`}>{product.title}</Link>
+				</li>
 			))}
 		</ul>
 	);
