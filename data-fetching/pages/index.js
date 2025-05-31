@@ -18,6 +18,10 @@ export async function getStaticProps() {
 	const jsonData = await promisifyReadFile(filePath);
 	const data = JSON.parse(jsonData);
 
+	if (data.products.length === 0) {
+		return { notFound: true };
+	}
+
 	return {
 		props: {
 			products: data.products,
