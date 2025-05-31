@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-function LastSalesPage() {
-	const [sales, setSales] = useState();
+function LastSalesPage(props) {
+	const [sales, setSales] = useState(props.sales);
 
 	const { data, error } = useSWR(
 		"https://nextjs-course-c8cce-default-rtdb.europe-west1.firebasedatabase.app/sales.json",
@@ -41,6 +41,31 @@ function LastSalesPage() {
 			))}
 		</ul>
 	);
+}
+
+export async function getStaticProps() {
+	const response = await fetch(
+		"https://nextjs-course-c8cce-default-rtdb.europe-west1.firebasedatabase.app/sales.json",
+	);
+
+	const data = await response.json();
+
+	const transformedSales = [];
+
+	for (const key in data) {
+		transformedSales.push({
+			id: key,
+			username: data[key].username,
+			volume: data[key].volume,
+		});
+	}
+
+	return {
+		props: {
+			sales: transformedSales,
+		},
+		revalidate: 10,
+	};
 }
 
 export default LastSalesPage;
