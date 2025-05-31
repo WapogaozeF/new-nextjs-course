@@ -98,7 +98,6 @@ function FilteredEventsPage(props) {
 					content={`All events for ${numMonth}/${numYear}.`}
 				/>
 			</Head>
-			<EventSummary title={event.title} />
 			<ResultsTitle date={date} />
 			<EventList items={filteredEvents} />
 		</Fragment>
