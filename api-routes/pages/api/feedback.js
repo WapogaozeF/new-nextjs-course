@@ -1,6 +1,17 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+function buildFeedbackPath() {
+	return path.join(process.cwd(), "data", "feedback.json");
+}
+
+async function extractFeedback(filePath) {
+	const fileData = await fs.readFile(filePath);
+	return JSON.parse(fileData);
+}
+
+const feedbackFilePath = buildFeedbackPath();
+
 async function handler(req, res) {
 	if (req.method === "POST") {
 		const email = req.body.email;
@@ -12,14 +23,13 @@ async function handler(req, res) {
 			text: feedbackText,
 		};
 
-		const filePath = path.join(process.cwd(), "data", "feedback.json");
-		const fileData = await fs.readFile(filePath);
-		const data = JSON.parse(fileData);
+		const data = await extractFeedback(feedbackFilePath);
 		data.push(newFeedback);
-		await fs.writeFile(filePath, JSON.stringify(data));
+		await fs.writeFile(feedbackFilePath, JSON.stringify(data));
 		res.status(201).json({ message: "Success!", feedback: newFeedback });
 	} else {
-		res.status(200).json({ message: "This works!" });
+		const data = await extractFeedback(feedbackFilePath);
+		res.status(200).json({ feedback: data });
 	}
 }
 
